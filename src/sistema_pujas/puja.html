@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la Subasta</title>
+    <link rel="stylesheet" href="../resultado_subasta/resultado_puja.css">
+    <script defer src="pujas.js"></script>
+</head>
+<body>
+    <ul>
+        <li><a href="../resultado_subasta/resultado.html">Volver a los artículos</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#cuenta">Tu Cuenta</a></li>
+        <li><a href="#news">Sobre Nosotros</a></li>
+    </ul><br>
+    <header>
+        <h1>Detalle de la Subasta</h1>
+    </header>
+
+    <main>
+        <section id="detalle-reloj">
+            <div class="detalle-izquierda">
+                <h2 id="nombre-reloj"></h2>
+                <img id="imagen-reloj" src="" alt="Imagen del reloj">
+            </div>
+
+            <div class="detalle-derecha">
+                <p id="precio-reloj"></p>
+                <label for="puja">Ingrese su puja:</label>
+                <input type="number" id="puja" min="1" step="1">
+                <button id="boton-pujar">Pujar</button>
+                <p id="mensaje-puja" aria-live="polite"></p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
