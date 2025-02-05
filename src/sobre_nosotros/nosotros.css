@@ -50,11 +50,9 @@ section {
     margin-bottom: 20px; /* Espacio entre secciones */
 }
 
-/* Estilo para la imagen debajo del título */
 .imagen-nosotros {
-    width: 100%;
-    max-width: 600px; /* Máxima anchura para la imagen */
-    height: auto;
+    width: 300px; /* Ajusta el valor según el tamaño deseado */
+    height: auto; /* Mantiene la proporción de la imagen */
     display: block;
-    margin: 20px auto; /* Centrar la imagen y agregar margen arriba y abajo */
+    margin: 20px auto; /* Centra la imagen */
 }
