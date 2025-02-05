@@ -36,9 +36,7 @@ h1 {
     color: #333;
 }
 
-/* ------------------------- */
-/* LISTA DE RELOJES EN SUBASTA */
-/* ------------------------- */
+
 #relojes {
     display: flex;
     flex-direction: column;
@@ -81,9 +79,6 @@ h1 {
     text-align: justify;
 }
 
-/* ------------------------- */
-/* PÁGINA DE DETALLES DE SUBASTA */
-/* ------------------------- */
 #detalle-reloj {
     display: flex;
     align-items: center;
@@ -142,7 +137,6 @@ h1 {
     box-sizing: border-box;
 }
 
-/* Botones similares a los del registro */
 button, input[type="submit"] {
     background-color: #333;
     color: white;

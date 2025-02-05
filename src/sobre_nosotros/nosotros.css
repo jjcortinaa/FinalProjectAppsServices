@@ -43,16 +43,16 @@ body {
 }
 
 main {
-    padding: 20px; /* Agregar espacio alrededor del contenido */
+    padding: 20px; 
 }
 
 section {
-    margin-bottom: 20px; /* Espacio entre secciones */
+    margin-bottom: 20px; 
 }
 
 .imagen-nosotros {
-    width: 300px; /* Ajusta el valor según el tamaño deseado */
-    height: auto; /* Mantiene la proporción de la imagen */
+    width: 300px; 
+    height: auto;
     display: block;
-    margin: 20px auto; /* Centra la imagen */
+    margin: 20px auto; 
 }
