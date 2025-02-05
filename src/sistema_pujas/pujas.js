@@ -22,8 +22,14 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("nombre-reloj").textContent = reloj.nombre;
         document.getElementById("imagen-reloj").src = reloj.imagen;
 
-        // Obtener el precio desde localStorage, o usar el precio base si no hay pujas
-        let precioActual = localStorage.getItem(relojId) ? parseInt(localStorage.getItem(relojId)) : reloj.precio;
+
+        let precioActual;
+        if (localStorage.getItem(relojId)) {
+            precioActual = parseInt(localStorage.getItem(relojId));
+        } else {
+            precioActual = reloj.precio;
+        }
+
         document.getElementById("precio-reloj").textContent = "Precio actual: " + precioActual + " euros";
 
         document.getElementById("boton-pujar").addEventListener("click", function () {
