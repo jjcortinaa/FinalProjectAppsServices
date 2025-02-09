@@ -60,6 +60,13 @@ main {
     padding: 20px; 
 }
 
+main img {
+    display: block;
+    margin: 20px auto;
+    max-width: 20%;
+    height: auto;
+}
+
 section {
     margin-bottom: 20px; 
 }
@@ -69,4 +76,15 @@ section {
     height: auto;
     display: block;
     margin: 20px auto; 
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 14px;
+    color: #888;
+  }
+  
+footer b {
+    color: #444;
 }
