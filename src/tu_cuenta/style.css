@@ -1,0 +1,148 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+
+body {
+  background-color: #f5f5f5;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-evenly;
+
+}
+.header-logo {
+  width: 70px; 
+  height: 70px;
+
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 22px;
+  color: #333;
+}
+
+/* Formulario */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 18px;
+  color: #444;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #444;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="reset"],
+input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input[type="reset"],
+input[type="submit"] {
+  width: auto;
+  cursor: pointer;
+}
+
+input[type="submit"] {
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+input[type="submit"]:hover {
+  background-color: #555;
+}
+
+input[type="reset"] {
+  background-color: #f0f0f0;
+}
+
+input[type="reset"]:hover {
+  background-color: #ddd;
+}
+
+/* Alineación de los botones de acción */
+.form-actions {
+  text-align: center;
+}
+
+/* Enlace "Volver" */
+a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 14px;
+  color: #888;
+}
+
+footer b {
+  color: #444;
+}

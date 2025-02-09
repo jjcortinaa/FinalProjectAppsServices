@@ -33,7 +33,7 @@ li a:hover {
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #333;
+    color: white;
 }
 
 
@@ -55,6 +55,20 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+}
+
+header{
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+    background-color: #333;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.header-logo {
+    width: 70px; 
+    height: 70px;
+
 }
 
 .reloj:hover {

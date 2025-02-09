@@ -33,7 +33,21 @@ li a:hover {
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #333;
+    color: white;
+}
+
+header{
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+    background-color: #333;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.header-logo {
+    width: 70px; 
+    height: 70px;
+
 }
 
 body {
