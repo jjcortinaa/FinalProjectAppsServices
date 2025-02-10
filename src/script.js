@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let searchTerm = document.getElementById("search-bar").value.trim().toLowerCase();
         if (searchTerm) {
-            window.location.href = `../resultado_subasta/resultado.html?search=${encodeURIComponent(searchTerm)}`;
+            window.location.href = `resultado_subasta/resultado.html?search=${encodeURIComponent(searchTerm)}`;
         }
     });
 });
