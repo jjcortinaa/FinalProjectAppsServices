@@ -1,0 +1,38 @@
+/* Estilos específicos para la página "Inicio" */
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.headerLogo {
+    width: 70px;
+    height: 70px;
+    margin-left: 20px;
+}
+
+.main {
+    padding: 20px;
+    text-align: center;
+}
+
+.mainImg {
+    width: 25%; 
+    margin: 20px auto;
+}
+
+.section {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.section h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+  
