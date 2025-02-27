@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className="layout">
       <nav>
         <ul>
           <li><Link href="/">Home</Link></li>
@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
           <li><Link href="/sobre_nosotros">Sobre Nosotros</Link></li>
         </ul>
       </nav>
-      <main>{children}</main>
+      <main className="content">{children}</main>
       <footer>
         <p>Creada por <b>José Juan Cortina y Xabier Albizu</b> <i>- 2025</i></p>
       </footer>
