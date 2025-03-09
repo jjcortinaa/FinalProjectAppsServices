@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
       <nav>
         <ul>
           <li><Link href="/">Home</Link></li>
-          <li><Link href="/cuenta">Tu Cuenta</Link></li>
+          <li><Link href="/inicio">Tu Cuenta</Link></li>
           <li><Link href="/sobre_nosotros">Sobre Nosotros</Link></li>
         </ul>
       </nav>
