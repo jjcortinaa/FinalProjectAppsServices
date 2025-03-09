@@ -24,7 +24,6 @@ const DetalleSubasta = ({ params }) => {
   const [puja, setPuja] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  // Cargar precio guardado en localStorage
   useEffect(() => {
     const storedPrice = localStorage.getItem(id);
     if (storedPrice) {
@@ -73,7 +72,7 @@ const DetalleSubasta = ({ params }) => {
               step="1"
               value={puja}
               onChange={(e) => setPuja(e.target.value)}
-              className={styles.inputNumber}  // Añadir clase para el input
+              className={styles.inputNumber} 
             />
             <button onClick={handlePuja} className={styles.button}>Pujar</button>
             <p id="mensaje-puja" className={styles.mensajePuja}>{mensaje}</p>
