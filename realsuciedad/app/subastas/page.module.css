@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+  
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.input, .select {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.relojes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.reloj {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    max-width: 900px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.reloj:hover {
+    transform: scale(1.02);
+}
+
+.reloj figure {
+    width: 180px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.reloj img {
+    width: 150px;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+}
+
+.reloj p {
+    flex-grow: 1;
+    margin-left: 20px;
+    text-align: justify;
+}
