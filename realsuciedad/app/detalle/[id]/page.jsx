@@ -16,7 +16,7 @@ const watches = {
 };
 
 const DetalleSubasta = ({ params }) => {
-  const { id } = use(params); // 
+  const { id } = use(params); 
   const router = useRouter();
   const reloj = watches[id];
 
