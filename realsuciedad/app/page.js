@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Layout from "../app/components/Layout"
-import styles from "../app/inicio/page.module.css"
+import styles from "../app/page.module.css"
 
 import Link from "next/link"
 import Image from 'next/image';

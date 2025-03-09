@@ -41,7 +41,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 180vh;
+    height: 30vh;
 }
 
 .customButton {
@@ -97,7 +97,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    height: 10vh;
 }
 
 .fieldset_ {
