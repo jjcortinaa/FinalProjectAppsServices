@@ -8,37 +8,53 @@ import Link from "next/link";
 const RegistroPage = () => {
   const router = useRouter();
   const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [address, setAddress] = useState('');
-  const [community, setCommunity] = useState('');
-  const [province, setProvince] = useState('');
+  const [locality, setLocality] = useState('');
+  const [municipality, setMunicipality] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const checkUsernameExists = async (username) => {
-    // Verificar si el nombre de usuario ya está registrado en el backend
-    const response = await fetch(`https://das-p2-backend.onrender.com/api/users/check-username/${username}`);
-    const data = await response.json();
-    
-    // Si el nombre de usuario ya existe, el backend debería devolver algo que indique que el usuario está ocupado
-    if (data.exists) {
-      setError('El nombre de usuario ya está en uso.');
-      return true;
-    }
-    return false;
+  const provinces = {
+    Andalucia: ['Sevilla', 'Málaga'],
+    Catalunya: ['Barcelona', 'Girona'],
+    Madrid: ['Madrid'],
+    Galicia: ['A Coruña', 'Lugo'],
+    PaisVasco: ['Bizkaia', 'Gipuzkoa'],
+    ComunidadValenciana: ['Valencia', 'Alicante'],
+    CastillaLeon: ['Valladolid', 'Burgos'],
+    CastillaLaMancha: ['Toledo', 'Albacete'],
+    Murcia: ['Murcia'],
+    Aragon: ['Zaragoza', 'Huesca'],
+    Extremadura: ['Badajoz', 'Cáceres'],
+    Cantabria: ['Santander'],
+    Navarra: ['Pamplona'],
+    LaRioja: ['Logroño'],
+    Baleares: ['Palma', 'Ibiza'],
+    Canarias: ['Las Palmas de Gran Canaria', 'Santa Cruz de Tenerife'],
+    Asturias: ['Oviedo'],
+    Ceuta: ['Ceuta'],
+    Melilla: ['Melilla'],
   };
+  const communityProvinces = provinces[locality] || [];
 
-  // Función para validar el formulario
   const validateForm = () => {
-    if (!user || !password) {
+    if (!user || !email || !password || !confirmPassword || !firstName || !lastName || !birthdate || !locality || !municipality) {
       setError('Todos los campos son obligatorios');
       return false;
     }
-    if (password.length < 8) {
-      setError('La contraseña debe tener al menos 8 caracteres');
+    if (password.length < 8 || password !== confirmPassword) {
+      setError('Las contraseñas deben coincidir y tener al menos 8 caracteres');
+      return false;
+    }
+    const birthDate = new Date(birthdate);
+    if (new Date().getFullYear() - birthDate.getFullYear() < 18) {
+      setError('Debes ser mayor de 18 años para registrarte.');
       return false;
     }
     return true;
@@ -46,49 +62,33 @@ const RegistroPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    // Verificar si el nombre de usuario ya existe
-    const usernameExists = await checkUsernameExists(user);
-    if (usernameExists) {
-      return;
-    }
+    setError('');
+    if (!validateForm()) return;
 
     setLoading(true);
     try {
-      // Aquí harías la solicitud a tu API para registrar al usuario
-      const response = await fetch('https://das-p2-backend.onrender.com/api/users/register', {
+      const response = await fetch('https://das-p2-backend.onrender.com/api/users/register/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: user,
+          email: email,
           password: password,
+          first_name: firstName,
+          last_name: lastName,
           birth_date: birthdate,
-          address: address,
-          community: community,
-          province: province,
+          locality: locality,
+          municipality: municipality,
         }),
       });
-
-      const data = await response.json();
-
       if (response.ok) {
         setSuccess(true);
-        // Redirigir al usuario a la página de inicio después de un registro exitoso
-        setTimeout(() => {
-          router.push('/inicio');
-        }, 2000);
+        setTimeout(() => router.push('/inicio'), 2000);
       } else {
         setError('Hubo un problema al intentar registrar el usuario.');
       }
-    } catch (error) {
-      console.error('Error al registrar:', error);
-      setError('Hubo un problema al intentar registrar el usuario.');
+    } catch {
+      setError('Error en la conexión con el servidor.');
     } finally {
       setLoading(false);
     }
@@ -96,92 +96,59 @@ const RegistroPage = () => {
 
   return (
     <Layout>
-      <header className={styles.header}>
-        <h1>Registro </h1>
-        <a href="/">
-          <img src="/fotos/logo.webp" alt="Logo de la página" className={styles.headerLogo} />
-        </a>
-      </header><br /><br /><br /><br /><br /><br />
-      <main>
-        <form onSubmit={handleSubmit} className={styles.formContainer_}>
-          <fieldset className={styles.fieldset_}>
-            <legend className={styles.legend_}>Crea una cuenta:</legend>
-            <label htmlFor="user" className={styles.label_}>Usuario:</label>
-            <input 
-              type="text" 
-              id="user" 
-              name="user" 
-              placeholder="nombre.usuario" 
-              required 
-              className={styles.input_}
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-            />
-            <label htmlFor="password" className={styles.label_}>Contraseña:</label>
-            <input 
-              type="password" 
-              id="password" 
-              name="password" 
-              placeholder="********" 
-              required 
-              className={styles.input_}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <label htmlFor="confirmPassword" className={styles.label_}>Confirmar Contraseña:</label>
-            <input 
-              type="password" 
-              id="confirmPassword" 
-              name="confirmPassword" 
-              placeholder="********" 
-              required 
-              className={styles.input_}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            <label htmlFor="birthdate" className={styles.label_}>Fecha de Nacimiento:</label>
-            <input 
-              type="date" 
-              id="birthdate" 
-              name="birthdate" 
-              required 
-              className={styles.input_}
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-            />
-            <label htmlFor="address" className={styles.label_}>Dirección:</label>
-            <input 
-              type="text" 
-              id="address" 
-              name="address" 
-              placeholder="Tu dirección completa" 
-              required 
-              className={styles.input_}
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <label htmlFor="community" className={styles.label_}>Comunidad Autónoma:</label>
-            <select 
-              id="community" 
-              name="community" 
-              required 
-              className={styles.input_}
-              value={community}
-              onChange={(e) => setCommunity(e.target.value)}
-            >
-              <option value="">Selecciona tu comunidad autónoma</option>
-              {/* Opciones de comunidades */}
-            </select>
-
-            {error && <p className={styles.error_}>{error}</p>}
-            {success && <p className={styles.success_}>¡Registro exitoso! Redirigiendo...</p>}
-            <input type="submit" value="Registrarse" className={styles.submitButton_} disabled={loading} />
-          </fieldset>
-        </form><br /><br /><br /><br /><br /><br />
-        <p className={styles.registerLink_}>
-          Si tienes cuenta, <Link href="/inicio">inicia sesión aquí</Link>
-        </p><br />
-      </main>
+      <form onSubmit={handleSubmit} className={styles.formContainer_}>
+      <fieldset className={styles.fieldset_}>
+      <legend className={styles.legend_}>Crea una cuenta:</legend>
+      <label htmlFor="user" className={styles.label_}>Usuario:</label>
+      <input id="user" type="text" placeholder="Usuario" value={user} onChange={(e) => setUser(e.target.value)} required />
+      <label htmlFor="email" className={styles.label_}>Email:</label>
+      <input id = "email" type="email" placeholder="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <label htmlFor="password" className={styles.label_}>Contraseña:</label>
+      <input id="password" type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      <label htmlFor="confirmPassword" className={styles.label_}>Confirmar Contraseña:</label>
+      <input id="confirmPassword" type="password" placeholder="Confirmar Contraseña" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+      <label htmlFor="confirmPassword" className={styles.label_}>Nombre:</label>
+      <input id="nombre"type="text" placeholder="Nombre" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+      <label htmlFor="apellido" className={styles.label_}>Apellido:</label>
+      <input id="apellido" type="text" placeholder="Apellido" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+      <label htmlFor="birthdate" className={styles.label_}>Nacimiento:</label>
+      <input id="birthdate" type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} required />
+      <label htmlFor="locality" className={styles.label_}>Comunidad Autónoma:</label>
+      <select id="locality" value={locality} onChange={(e) => setLocality(e.target.value)} required>
+      <option value="">Selecciona tu comunidad autónoma</option>
+              <option value="Andalucia">Andalucía</option>
+              <option value="Catalunya">Cataluña</option>
+              <option value="Madrid">Madrid</option>
+              <option value="Galicia">Galicia</option>
+              <option value="PaisVasco">País Vasco</option>
+              <option value="ComunidadValenciana">Comunidad Valenciana</option>
+              <option value="CastillaLeon">Castilla y León</option>
+              <option value="CastillaLaMancha">Castilla-La Mancha</option>
+              <option value="Murcia">Región de Murcia</option>
+              <option value="Aragon">Aragón</option>
+              <option value="Extremadura">Extremadura</option>
+              <option value="Cantabria">Cantabria</option>
+              <option value="Navarra">Navarra</option>
+              <option value="LaRioja">La Rioja</option>
+              <option value="Baleares">Islas Baleares</option>
+              <option value="Canarias">Canarias</option>
+              <option value="Asturias">Asturias</option>
+              <option value="Ceuta">Ceuta</option>
+              <option value="Melilla">Melilla</option>
+      </select>
+        {communityProvinces.length > 0 && (
+          <><label htmlFor="province" className={styles.label_}>Provincia:</label><select id="province" value={municipality} onChange={(e) => setMunicipality(e.target.value)} required>
+              <option value="">Selecciona tu provincia</option>
+              {communityProvinces.map((provincia, index) => (
+                <option key={index} value={provincia}>{provincia}</option>
+              ))}
+            </select></>
+        )}
+        {error && <p>{error}</p>}
+        {success && <p>¡Registro exitoso! Redirigiendo...</p>}
+        <button type="submit" disabled={loading}>Registrarse</button>
+        </fieldset>
+      </form>
     </Layout>
   );
 };
