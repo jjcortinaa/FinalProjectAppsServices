@@ -1,0 +1,182 @@
+/* Estilos específicos para la página "Home" */
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.headerLogo {
+    width: 70px;
+    height: 70px;
+    margin-left: 20px;
+}
+
+.main {
+    padding: 20px;
+    text-align: center;
+}
+
+.mainImg {
+    width: 25%; 
+    margin: 20px auto;
+}
+
+.section {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.section h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+  
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}
+
+.customButton {
+    background-color: black;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.customButton:hover {
+    background-color: #808080;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.customButton:focus {
+    outline: none;
+}
+
+.customButton:active {
+    transform: scale(0.98);
+}
+
+
+/* Estilos específicos para la página "Inicio Sesión" */
+
+.header_ {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.headerLogo_ {
+    width: 150px;
+    margin-top: 10px;
+}
+
+.subtitle_ {
+    text-align: center;
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+.formContainer_ {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+.fieldset_ {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.legend_ {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.label_ {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input_ {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input_:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.submitButton_ {
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton_:hover {
+    background-color: #808080;;
+}
+
+.submitButton_:active {
+    transform: scale(0.98);
+}
+
+.error_ {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.registerLink_ {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.registerLink_ a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.registerLink_ a:hover {
+    text-decoration: underline;
+}

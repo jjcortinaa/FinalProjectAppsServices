@@ -1,0 +1,59 @@
+
+.container {
+    padding: 20px;
+}
+  
+
+.detalleReloj {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+
+.detalleIzquierda {
+    width: 40%;
+}
+
+
+.detalleDerecha {
+    width: 50%;
+}
+
+
+.imagenReloj {
+    max-width: 80%; 
+    height: auto;
+}
+
+
+.inputNumber {
+    width: 150px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #474747;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; 
+}
+
+.button:hover {
+    background-color: #1d1d1d;
+}
+
+
+.mensajePuja {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #e74c3c; 
+}
+  
