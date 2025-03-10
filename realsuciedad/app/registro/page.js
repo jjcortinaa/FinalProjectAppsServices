@@ -96,59 +96,72 @@ const RegistroPage = () => {
 
   return (
     <Layout>
+      <header className={styles.header}>
+        <h1>Crear Cuenta</h1>
+        <a href="/">
+          <img src="/fotos/logo.webp" alt="Logo de la página" className={styles.headerLogo} />
+        </a>
+      </header>
+      <main className={styles.main}>
       <form onSubmit={handleSubmit} className={styles.formContainer_}>
-      <fieldset className={styles.fieldset_}>
-      <legend className={styles.legend_}>Crea una cuenta:</legend>
-      <label htmlFor="user" className={styles.label_}>Usuario:</label>
-      <input id="user" type="text" placeholder="Usuario" value={user} onChange={(e) => setUser(e.target.value)} required />
-      <label htmlFor="email" className={styles.label_}>Email:</label>
-      <input id = "email" type="email" placeholder="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      <label htmlFor="password" className={styles.label_}>Contraseña:</label>
-      <input id="password" type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      <label htmlFor="confirmPassword" className={styles.label_}>Confirmar Contraseña:</label>
-      <input id="confirmPassword" type="password" placeholder="Confirmar Contraseña" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-      <label htmlFor="confirmPassword" className={styles.label_}>Nombre:</label>
-      <input id="nombre"type="text" placeholder="Nombre" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-      <label htmlFor="apellido" className={styles.label_}>Apellido:</label>
-      <input id="apellido" type="text" placeholder="Apellido" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-      <label htmlFor="birthdate" className={styles.label_}>Nacimiento:</label>
-      <input id="birthdate" type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} required />
-      <label htmlFor="locality" className={styles.label_}>Comunidad Autónoma:</label>
-      <select id="locality" value={locality} onChange={(e) => setLocality(e.target.value)} required>
-      <option value="">Selecciona tu comunidad autónoma</option>
-              <option value="Andalucia">Andalucía</option>
-              <option value="Catalunya">Cataluña</option>
-              <option value="Madrid">Madrid</option>
-              <option value="Galicia">Galicia</option>
-              <option value="PaisVasco">País Vasco</option>
-              <option value="ComunidadValenciana">Comunidad Valenciana</option>
-              <option value="CastillaLeon">Castilla y León</option>
-              <option value="CastillaLaMancha">Castilla-La Mancha</option>
-              <option value="Murcia">Región de Murcia</option>
-              <option value="Aragon">Aragón</option>
-              <option value="Extremadura">Extremadura</option>
-              <option value="Cantabria">Cantabria</option>
-              <option value="Navarra">Navarra</option>
-              <option value="LaRioja">La Rioja</option>
-              <option value="Baleares">Islas Baleares</option>
-              <option value="Canarias">Canarias</option>
-              <option value="Asturias">Asturias</option>
-              <option value="Ceuta">Ceuta</option>
-              <option value="Melilla">Melilla</option>
-      </select>
-        {communityProvinces.length > 0 && (
-          <><label htmlFor="province" className={styles.label_}>Provincia:</label><select id="province" value={municipality} onChange={(e) => setMunicipality(e.target.value)} required>
-              <option value="">Selecciona tu provincia</option>
-              {communityProvinces.map((provincia, index) => (
-                <option key={index} value={provincia}>{provincia}</option>
-              ))}
-            </select></>
-        )}
-        {error && <p>{error}</p>}
-        {success && <p>¡Registro exitoso! Redirigiendo...</p>}
-        <button type="submit" disabled={loading}>Registrarse</button>
+        <fieldset className={styles.fieldset_}>
+          <label htmlFor="user" className={styles.label_}>Usuario:</label>
+          <input id="user" type="text" placeholder="Usuario" value={user} onChange={(e) => setUser(e.target.value)} className={styles.input_} required />
+          <label htmlFor="email" className={styles.label_}>Email:</label>
+          <input id = "email" type="email" placeholder="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} className={styles.input_} required />
+          <label htmlFor="password" className={styles.label_}>Contraseña:</label>
+          <input id="password" type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input_} required />
+          <label htmlFor="confirmPassword" className={styles.label_}>Confirmar Contraseña:</label>
+          <input id="confirmPassword" type="password" placeholder="Confirmar Contraseña" value={confirmPassword} className={styles.input_} onChange={(e) => setConfirmPassword(e.target.value)} required />
+          <label htmlFor="confirmPassword" className={styles.label_}>Nombre:</label>
+          <input id="nombre"type="text" placeholder="Nombre" value={firstName} className={styles.input_} onChange={(e) => setFirstName(e.target.value)} required />
+          <label htmlFor="apellido" className={styles.label_}>Apellido:</label>
+          <input id="apellido" type="text" placeholder="Apellido" value={lastName} className={styles.input_} onChange={(e) => setLastName(e.target.value)} required />
+          <label htmlFor="birthdate" className={styles.label_}>Nacimiento:</label>
+          <input id="birthdate" type="date" value={birthdate} className={styles.input_} onChange={(e) => setBirthdate(e.target.value)} required />
+          <label htmlFor="locality" className={styles.label_}>Comunidad Autónoma:</label>
+          <select id="locality" value={locality} onChange={(e) => setLocality(e.target.value)} required>
+          <option value="">Selecciona tu comunidad autónoma</option>
+                  <option value="Andalucia">Andalucía</option>
+                  <option value="Catalunya">Cataluña</option>
+                  <option value="Madrid">Madrid</option>
+                  <option value="Galicia">Galicia</option>
+                  <option value="PaisVasco">País Vasco</option>
+                  <option value="ComunidadValenciana">Comunidad Valenciana</option>
+                  <option value="CastillaLeon">Castilla y León</option>
+                  <option value="CastillaLaMancha">Castilla-La Mancha</option>
+                  <option value="Murcia">Región de Murcia</option>
+                  <option value="Aragon">Aragón</option>
+                  <option value="Extremadura">Extremadura</option>
+                  <option value="Cantabria">Cantabria</option>
+                  <option value="Navarra">Navarra</option>
+                  <option value="LaRioja">La Rioja</option>
+                  <option value="Baleares">Islas Baleares</option>
+                  <option value="Canarias">Canarias</option>
+                  <option value="Asturias">Asturias</option>
+                  <option value="Ceuta">Ceuta</option>
+                  <option value="Melilla">Melilla</option>
+          </select>
+            {communityProvinces.length > 0 && (
+              <><label htmlFor="municipality" className={styles.label_}>Provincia:</label>
+              <select id="municipality" value={municipality} onChange={(e) => setMunicipality(e.target.value)} required>
+                  <option value="">Selecciona tu provincia</option>
+                  {communityProvinces.map((provincia, index) => (
+                    <option key={index} value={provincia}>{provincia}</option>
+                  ))}
+                </select></>
+            )}
+            {error && <p>{error}</p>}
+            {success && <p>¡Registro exitoso! Redirigiendo...</p>}
+            <br/><br/><button type="submit" className={styles.submitButton_} disabled={loading}>
+              {loading ? 'Cargando...' : 'Ingresar'}
+            </button>
+            <p className={styles.registerLink_}>
+            Si tienes cuenta, <Link href="/inicio">inicia sesión aquí</Link>
+            </p>
         </fieldset>
       </form>
+      </main>
     </Layout>
   );
 };
