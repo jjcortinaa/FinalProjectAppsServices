@@ -19,8 +19,11 @@ const Layout = ({ children }) => {
         <ul>
           <li><Link href="/">Home</Link></li>
           {/* Si el usuario está logueado, se muestra "Detalles Usuario", si no, "Tu Cuenta" */}
-          {user!="0" ? (
-            <li><Link href="/usuario">Detalles Usuario</Link></li>
+          {user != "0" ? (
+            <>
+              <li><Link href="/usuario">Detalles Usuario</Link></li>
+              <li><Link href="/crear_subasta">Crear Subasta</Link></li> {/* Enlace para crear subasta */}
+            </>
           ) : (
             <li><Link href="/inicio">Tu Cuenta</Link></li>
           )}
@@ -28,7 +31,7 @@ const Layout = ({ children }) => {
         </ul>
       </nav>
 
-      {(user!="0") && (
+      {(user != "0") && (
         <div className="welcome">
           <p>Bienvenido, {user}</p>
         </div>
