@@ -18,7 +18,7 @@ const watches = {
 const DetalleSubasta = ({ params }) => {
   const { id } = use(params); 
   const router = useRouter();
-  const reloj = watches[id];
+  const [reloj, setWatches] = useState([]);
 
   const [precioActual, setPrecioActual] = useState(reloj?.price || 0);
   const [puja, setPuja] = useState("");
@@ -30,6 +30,13 @@ const DetalleSubasta = ({ params }) => {
       setPrecioActual(parseInt(storedPrice));
     }
   }, [id]);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/auctions/`)
+      .then(res => res.json())
+      .then(data => setWatches(data.results[id-1] || []))
+      .catch(err => console.error('Error al obtener categorías:', err));
+  }, []);
 
   const handlePuja = () => {
     const cantidad = parseInt(puja);
@@ -59,7 +66,7 @@ const DetalleSubasta = ({ params }) => {
         <div className={styles.detalleReloj}>
           <div className={styles.detalleIzquierda}>
             <h2>{reloj.name}</h2>
-            <img src={reloj.image} alt={reloj.name} className={styles.imagenReloj} />
+            <img src={reloj.thumbnail} alt={reloj.name} className={styles.imagenReloj} />
           </div>
 
           <div className={styles.detalleDerecha}>
