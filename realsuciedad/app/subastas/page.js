@@ -12,7 +12,7 @@ const Subastas = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/auctions/')
+    fetch(`http://127.0.0.1:8000/api/auctions/`)
       .then(res => res.json())
       .then(data => setWatches(data.results || []))
       .catch(err => console.error('Error al obtener categorías:', err));
