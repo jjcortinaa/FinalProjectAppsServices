@@ -20,7 +20,7 @@ const DetalleSubasta = ({ params }) => {
   const router = useRouter();
   const [reloj, setWatches] = useState([]);
 
-  const [precioActual, setPrecioActual] = useState(reloj?.price || 0);
+  const [precioActual, setPrecioActual] = useState(0);
   const [puja, setPuja] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [mensajeClase, setMensajeClase] = useState(""); // Nuevo estado para la clase de mensaje
@@ -35,9 +35,17 @@ const DetalleSubasta = ({ params }) => {
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/auctions/`)
       .then(res => res.json())
-      .then(data => setWatches(data.results[id-1] || []))
-      .catch(err => console.error('Error al obtener categorías:', err));
+      .then(data => {
+        const auction = data.results[id - 1];
+        if (auction) {
+          setWatches(auction || []);
+          setPrecioActual(auction.price || 0); 
+        }
+      })
+      .catch(err => console.error('Error al obtener subastas:', err));
   }, []);
+  
+
 
   const handlePuja = () => {
     const cantidad = parseInt(puja);
@@ -56,6 +64,25 @@ const DetalleSubasta = ({ params }) => {
       localStorage.setItem(id, cantidad);
       setMensaje(`Puja realizada por ${cantidad} euros. ¡Buena suerte!`);
       setMensajeClase(styles.mensajeExito); // Clase para éxito
+
+      // PUT al backend
+      fetch(`http://127.0.0.1:8000/api/auctions/${id}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ price: cantidad }),
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("Error al actualizar el precio");
+          return res.json();
+        })
+        .then(data => console.log("Precio actualizado:", data))
+        .catch(err => {
+          console.error("Error al hacer PUT:", err);
+          setMensaje("Error al actualizar el precio en el servidor.");
+          setMensajeClase(styles.mensajeError);
+        });
     }
   };
 
