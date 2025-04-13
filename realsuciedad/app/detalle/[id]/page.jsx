@@ -23,6 +23,7 @@ const DetalleSubasta = ({ params }) => {
   const [precioActual, setPrecioActual] = useState(reloj?.price || 0);
   const [puja, setPuja] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [mensajeClase, setMensajeClase] = useState(""); // Nuevo estado para la clase de mensaje
 
   useEffect(() => {
     const storedPrice = localStorage.getItem(id);
@@ -43,15 +44,18 @@ const DetalleSubasta = ({ params }) => {
 
     if (!cantidad || cantidad <= 0) {
       setMensaje("Introduce una cantidad válida.");
+      setMensajeClase(styles.mensajeError); // Clase para error
       return;
     }
 
     if (cantidad <= precioActual) {
       setMensaje("La puja debe ser mayor al precio actual.");
+      setMensajeClase(styles.mensajeError); // Clase para error
     } else {
       setPrecioActual(cantidad);
       localStorage.setItem(id, cantidad);
       setMensaje(`Puja realizada por ${cantidad} euros. ¡Buena suerte!`);
+      setMensajeClase(styles.mensajeExito); // Clase para éxito
     }
   };
 
@@ -82,7 +86,7 @@ const DetalleSubasta = ({ params }) => {
               className={styles.inputNumber} 
             />
             <button onClick={handlePuja} className={styles.button}>Pujar</button>
-            <p id="mensaje-puja" className={styles.mensajePuja}>{mensaje}</p>
+            <p id="mensaje-puja" className={`${styles.mensajePuja} ${mensajeClase}`}>{mensaje}</p>
           </div>
         </div>
         <button onClick={() => router.push("/subastas")} className={styles.button}>Volver a los artículos</button>
