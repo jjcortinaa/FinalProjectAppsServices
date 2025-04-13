@@ -49,10 +49,10 @@ const Inicio = () => {
         }),
       });
 
-      const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('accessToken', data.token);
+        const data = await response.json();
+        localStorage.setItem('accessToken', JSON.stringify({ username: user, password: password }));
         router.push('/sobre_nosotros'); 
       } else {
         setError('Credenciales incorrectas. Intenta de nuevo.');

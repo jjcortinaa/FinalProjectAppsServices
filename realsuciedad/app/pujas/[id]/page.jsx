@@ -1,11 +1,14 @@
-"use client";
+'use client';
 
+import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from "react";
 import Layout from "@/app/components/Layout";
 import styles from './pujas.module.css';
 
-const DetalleSubasta = ({ params }) => {
-  const { id } = use(params);
+const DetalleSubasta = () => {
+  const params = useParams();
+  const id = params.id;
+  const router = useRouter();
   const [pujas, setPujas] = useState([]);
   const [mensaje, setMensaje] = useState("");
   const [mensajeClase, setMensajeClase] = useState("");
@@ -33,7 +36,7 @@ const DetalleSubasta = ({ params }) => {
           <ul>
             {pujas.map((puja, index) => (
               <li key={index}>
-                <strong>{puja.bidder}</strong> pujó <strong>{puja.price} euros</strong> el {new Date(puja.creation_date).toLocaleString()}
+                <strong>{puja.id} - {puja.bidder}</strong> pujó <strong>{puja.price} euros</strong> el {new Date(puja.creation_date).toLocaleString()}
               </li>
             ))}
           </ul>
@@ -42,6 +45,7 @@ const DetalleSubasta = ({ params }) => {
         )}
 
         <p id="mensaje-puja" className={`${styles.mensajePuja} ${mensajeClase}`}>{mensaje}</p>
+        <button onClick={() => router.push(`/detalle/${id}`)} className={styles.button}>Volver a la puja</button>
       </div>
     </Layout>
   );

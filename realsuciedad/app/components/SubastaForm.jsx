@@ -6,6 +6,7 @@ import styles from './SubastaForm.module.css';
 
 const SubastaForm = ({ id }) => {
   const router = useRouter();
+  const [user,setUser] = useState(0);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -27,7 +28,15 @@ const SubastaForm = ({ id }) => {
       .then(res => res.json())
       .then(data => setCategories(data.results || []))
       .catch(err => console.error('Error al obtener categorías:', err));
+  
+    const storedUser = localStorage.getItem('accessToken');
+    if (storedUser && storedUser !== 'undefined') {
+      const parsedUser = JSON.parse(storedUser);
+      const token = parsedUser.token;
+      setUser(parsedUser.username);
+    }
   }, []);
+  
 
   // Si estamos editando, cargar datos
   useEffect(() => {
@@ -72,6 +81,7 @@ const SubastaForm = ({ id }) => {
       creation_date: creationDate,
       closing_date: new Date(endDate).toISOString(),
       isOpen: true,
+      auctioneer: user,
     };
 
     const method = id ? 'PATCH' : 'POST';
