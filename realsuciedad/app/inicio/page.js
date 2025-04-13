@@ -37,8 +37,9 @@ const Inicio = () => {
     setLoading(true);
 
     try {
-  
-      const response = await fetch('https://das-p2-backend.onrender.com/api/users/login/', {
+      {/* TODO */}
+      {/* Modificar url en la que inician sesiión los usuarios */}
+      const response = await fetch('https://das-p2-backend.onrender.com/api/users/login/', {  
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +50,8 @@ const Inicio = () => {
         }),
       });
 
-
+      {/* TODO */}
+      {/* ¿El POST devuelve el id del username? En caso de que sí añadirlo como elemento del dict */}
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('accessToken', JSON.stringify({ username: user, password: password }));

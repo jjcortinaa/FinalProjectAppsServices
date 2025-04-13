@@ -20,7 +20,14 @@ export default function Usuario() {
         </a>
       </header>
       <main>
-        
+      {/* TODO */}
+      {/* Botón log out y función fetch */}
+
+      {/* TODO */}
+      {/* Botón mis subastas que envíe a la carpeta mis_subastas/[id] */}
+
+      {/* TODO */}
+      {/* Botón mis pujas  que envíe a la carpeta mis_pujas/[id]*/}
       </main>
 
       </Layout>

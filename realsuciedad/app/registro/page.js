@@ -67,6 +67,8 @@ const RegistroPage = () => {
 
     setLoading(true);
     try {
+      {/* TODO */}
+      {/* Modificar url en la que se registran los usuarios */}
       const response = await fetch('https://das-p2-backend.onrender.com/api/users/register/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

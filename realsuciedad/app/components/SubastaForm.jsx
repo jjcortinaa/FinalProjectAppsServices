@@ -28,7 +28,9 @@ const SubastaForm = ({ id }) => {
       .then(res => res.json())
       .then(data => setCategories(data.results || []))
       .catch(err => console.error('Error al obtener categorías:', err));
-  
+
+    {/* TODO */}
+    {/* Cambiar parsedUser.username por parsedUser.id (hacer antes el TODO de inicio) */}
     const storedUser = localStorage.getItem('accessToken');
     if (storedUser && storedUser !== 'undefined') {
       const parsedUser = JSON.parse(storedUser);
