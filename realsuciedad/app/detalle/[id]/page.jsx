@@ -6,15 +6,6 @@ import { useState, useEffect } from "react";
 import Layout from "@/app/components/Layout";
 import styles from './detalle.module.css';
 
-const watches = {
-  daytona: { name: "Rolex Cosmograph Daytona", price: 35000, image: "/fotos/cosmograph.png" },
-  cartier: { name: "Cartier Santos", price: 6500, image: "/fotos/cartier_santos.png" },
-  cr7: { name: "Jacob & Co. FLIGHT OF CR7", price: 62800, image: "/fotos/cr7.png" },
-  nautilus: { name: "Patek Philippe Nautilus", price: 150000, image: "/fotos/patek_nautilus.png" },
-  apple: { name: "Apple Watch", price: 320, image: "/fotos/apple_watch.png" },
-  richard: { name: "Richard Mille RM35-02 Rafael Nadal", price: 369000, image: "/fotos/richard.png" }
-};
-
 const DetalleSubasta = ({ params }) => {
   const { id } = use(params); 
   const router = useRouter();
@@ -24,7 +15,7 @@ const DetalleSubasta = ({ params }) => {
   const [puja, setPuja] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [mensajeClase, setMensajeClase] = useState(""); // Nuevo estado para la clase de mensaje
-
+ 
   useEffect(() => {
     const storedPrice = localStorage.getItem(id);
     if (storedPrice) {

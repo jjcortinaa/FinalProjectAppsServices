@@ -118,12 +118,12 @@ const SubastaForm = ({ id }) => {
 
         <div className={styles.formControl}>
           <label>Precio inicial:</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required step="0.01" />
+          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required step="0.1" />
         </div>
 
         <div className={styles.formControl}>
           <label>Valoración:</label>
-          <input type="number" value={rating} onChange={(e) => setRating(e.target.value)} min="0" max="5" step="0.1" />
+          <input type="number" value={rating} onChange={(e) => setRating(e.target.value)}  step="0.1" />
         </div>
 
         <div className={styles.formControl}>
