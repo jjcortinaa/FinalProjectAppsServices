@@ -40,22 +40,22 @@ const DetalleSubasta = ({ params }) => {
 
   const handlePuja = () => {
     const cantidad = parseInt(puja);
-
+  
     if (!cantidad || cantidad <= 0) {
       setMensaje("Introduce una cantidad válida.");
-      setMensajeClase(styles.mensajeError); // Clase para error
+      setMensajeClase(styles.mensajeError);
       return;
     }
-
+  
     if (cantidad <= precioActual) {
       setMensaje("La puja debe ser mayor al precio actual.");
-      setMensajeClase(styles.mensajeError); // Clase para error
+      setMensajeClase(styles.mensajeError);
     } else {
       setPrecioActual(cantidad);
       localStorage.setItem(id, cantidad);
       setMensaje(`Puja realizada por ${cantidad} euros. ¡Buena suerte!`);
-      setMensajeClase(styles.mensajeExito); // Clase para éxito
-
+      setMensajeClase(styles.mensajeExito);
+  
       // PUT al backend
       fetch(`http://127.0.0.1:8000/api/auctions/${id}/`, {
         method: "PATCH",
@@ -68,14 +68,37 @@ const DetalleSubasta = ({ params }) => {
           if (!res.ok) throw new Error("Error al actualizar el precio");
           return res.json();
         })
-        .then(data => console.log("Precio actualizado:", data))
+        .then(data => {
+          console.log("Precio actualizado:", data);
+  
+          const nombreUsuario = localStorage.getItem("username") || "Anónimo";
+  
+          // POST al backend para registrar la puja
+          return fetch(`http://127.0.0.1:8000/api/auctions/${id}/bids/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              auction: id,
+              price: cantidad,
+              bidder: nombreUsuario,
+            }),
+          });
+        })
+        .then(res => {
+          if (!res.ok) throw new Error("Error al registrar la puja");
+          return res.json();
+        })
+        .then(data => console.log("Puja registrada:", data))
         .catch(err => {
-          console.error("Error al hacer PUT:", err);
-          setMensaje("Error al actualizar el precio en el servidor.");
+          console.error("Error al hacer PUT o POST:", err);
+          setMensaje("Error al registrar la puja en el servidor.");
           setMensajeClase(styles.mensajeError);
         });
     }
   };
+  
 
   if (!reloj) {
     return <p>Reloj no encontrado.</p>;
@@ -108,6 +131,8 @@ const DetalleSubasta = ({ params }) => {
           </div>
         </div>
         <button onClick={() => router.push("/subastas")} className={styles.button}>Volver a los artículos</button>
+        <button onClick={() => router.push(`/pujas/${id}`)} className={styles.button}>Ver Historial de Pujas</button>
+
       </div>
     </Layout>
   );
