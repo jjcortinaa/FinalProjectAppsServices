@@ -70,3 +70,22 @@
 .customButton:active {
   transform: scale(0.98);
 }
+
+.backgroundContainer {
+  background-image: url('/fotos/98.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.overlayContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}

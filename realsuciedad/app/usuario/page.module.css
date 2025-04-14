@@ -1,18 +1,72 @@
+/* Cabecera */
 .header {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #d3d3d3;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 0;
+  gap: 15px; /* espacio entre el título y el logo */
+}
+
+/* Logo */
+.headerLogo {
+  width: 50px;
+  height: 50px;
+}
+
+/* Título de la cabecera */
+.headerTitle {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+/* Contenido principal */
+.main {
+  display: flex;
   flex-direction: column;
+  align-items: center; /* Centra el contenido horizontalmente */
   padding: 20px;
 }
 
-  
-.header h1 {
-  margin: 0; 
-  font-size: 24px;
+/* Secciones centradas con recuadro */
+.section {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: left;
 }
 
-.headerLogo {
-  width: 10px;
-  margin-top: 10px;
+/* Títulos de las secciones */
+.section h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Lista de ítems */
+.buttonList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.buttonItem {
+  margin-bottom: 10px;
+}
+
+.buttonItem a {
+  text-decoration: none;
+  color: #0070f3;
+}
+
+.buttonItem a:hover {
+  text-decoration: underline;
 }
