@@ -24,6 +24,7 @@ const DetalleSubasta = ({ params }) => {
  
 useEffect(() => {
   const storedPrice = localStorage.getItem(id);
+
   if (storedPrice) {
     setPrecioActual(parseInt(storedPrice));
   }
@@ -50,19 +51,23 @@ useEffect(() => {
   } else {
     console.warn("Token no encontrado");
   }
-  fetch(`http://127.0.0.1:8000/api/auctions/`)
+  fetch(`http://127.0.0.1:8000/api/auctions/${id}/`)
   .then(res => res.json())
   .then(data => {
-    const auction = data.results[id - 1];
+    // Si la API devuelve los datos directamente sin `results`, usa `data` directamente
+    const auction = data;  // No es necesario acceder a data.results
+
     if (auction) {
       setWatches(auction || []);
       setPrecioActual(auction.price || 0);
       if (parseInt(auction.auctioneer) === parseInt(storedId)){
-        setOwner(true)
-      } 
+        setOwner(true);
+      }
     }
   })
-  .catch(err => console.error('Error al obtener subastas:', err));
+  .catch(error => {
+    console.error("Error fetching auction:", error);
+  });
 }, [id]);
 
 

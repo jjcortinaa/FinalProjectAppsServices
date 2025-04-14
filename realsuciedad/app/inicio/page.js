@@ -63,7 +63,9 @@ const Inicio = () => {
         const userData = await userResponse.json();
         const userId = userData.id;
   
+        localStorage.setItem('user', user);
         localStorage.setItem('user_id', userId);
+        localStorage.setItem('password', password)
         localStorage.setItem('accessToken', JSON.stringify({ username: user, password: password }));
   
         router.push('/sobre_nosotros'); 

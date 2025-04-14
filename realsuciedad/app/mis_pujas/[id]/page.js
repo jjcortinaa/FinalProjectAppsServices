@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Layout from "@/app/components/Layout";
+import styles from './misPujas.module.css';  // Asegúrate de tener este archivo CSS
 
 const MisPujas = () => {
+
   const id = localStorage.getItem('user_id')
   const [pujas, setPujas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [auctionName, setAuctionName] = useState("")
 
   useEffect(() => {
     // Obtener todas las subastas
@@ -32,6 +35,7 @@ const MisPujas = () => {
         }));
 
         setPujas(pujasUsuario);
+
         setLoading(false);
       })
       .catch(err => {
@@ -42,15 +46,20 @@ const MisPujas = () => {
 
   return (
     <Layout>
-      <h1>Mis Pujas</h1>
-      {loading ? <p>Cargando...</p> : (
+      <h1 className={styles.pageTitle}>Mis Pujas</h1>
+      {loading ? <p className={styles.loadingText}>Cargando...</p> : (
         pujas.length === 0 ? (
-          <p>No has realizado ninguna puja.</p>
+          <p className={styles.noBidsText}>No has realizado ninguna puja.</p>
         ) : (
-          <ul>
+          <ul className={styles.bidList}>
             {pujas.map((puja, index) => (
-              <li key={index}>
-                <strong>{puja.auctionName}</strong>: {puja.price} € (Puja ID: {puja.id})
+              <li key={index} className={styles.bidCard}>
+                <h3 className={styles.auctionName}>{puja.auctionName}</h3>
+                <p className={styles.bidDetails}>
+                  <strong>Puja ID:</strong> {puja.id} <br />
+                  <strong>Precio:</strong> {puja.price} € <br />
+                  <strong>Auction ID:</strong> {puja.auction} 
+                </p>
               </li>
             ))}
           </ul>

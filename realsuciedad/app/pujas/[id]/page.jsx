@@ -30,18 +30,18 @@ const DetalleSubasta = () => {
   return (
     <Layout>
       <div className={styles.container}>
-        <h1>Historial de Pujas</h1>
-        
+        <h1 className={styles.titulo}>Historial de Pujas</h1>
+
         {pujas.length > 0 ? (
-          <ul>
+          <ul className={styles.listaPujas}>
             {pujas.map((puja, index) => (
-              <li key={index}>
-                <strong>{puja.id} - {puja.bidder}={puja.bidder_id}</strong> pujó <strong>{puja.price} euros</strong> el {new Date(puja.creation_date).toLocaleString()}
+              <li key={index} className={styles.pujaItem}>
+            <strong>{puja.bidder}</strong>&nbsp;&nbsp;pujó&nbsp;&nbsp;<strong>{puja.price} €</strong>&nbsp;&nbsp;el&nbsp;&nbsp;{new Date(puja.creation_date).toLocaleString()}
               </li>
             ))}
           </ul>
         ) : (
-          <p>No hay pujas registradas para esta subasta.</p>
+          <p className={styles.mensajeInfo}>No hay pujas registradas para esta subasta.</p>
         )}
 
         <p id="mensaje-puja" className={`${styles.mensajePuja} ${mensajeClase}`}>{mensaje}</p>
