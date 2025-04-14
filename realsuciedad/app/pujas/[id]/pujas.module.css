@@ -1,0 +1,78 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(231, 224, 224);
+  }
+  
+  .titulo {
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .listaPujas {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .pujaItem {
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(242, 241, 241);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pujaItem strong {
+    color: #3f4245;
+  }
+  
+  .mensajeInfo {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+  }
+  
+  .mensajePuja {
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .mensajeError {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .mensajeExito {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    background-color: #626568;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #202122;
+  }
+  

@@ -29,16 +29,15 @@ const Inicio = () => {
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) {
       return;
     }
-
-    setLoading(true);
-
-    try {
   
-      const response = await fetch('https://das-p2-backend.onrender.com/api/users/login/', {
+    setLoading(true);
+  
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/token/', {  
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,11 +47,27 @@ const Inicio = () => {
           password: password,
         }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        localStorage.setItem('accessToken', data.token);
+        const accessToken = data.access;
+  
+        const userResponse = await fetch('http://127.0.0.1:8000/api/users/profile/', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+  
+        const userData = await userResponse.json();
+        const userId = userData.id;
+  
+        localStorage.setItem('user', user);
+        localStorage.setItem('user_id', userId);
+        localStorage.setItem('password', password)
+        localStorage.setItem('accessToken', JSON.stringify({ username: user, password: password }));
+  
         router.push('/sobre_nosotros'); 
       } else {
         setError('Credenciales incorrectas. Intenta de nuevo.');
@@ -64,6 +79,7 @@ const Inicio = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <Layout>

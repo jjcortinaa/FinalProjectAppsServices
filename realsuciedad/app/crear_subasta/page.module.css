@@ -1,0 +1,111 @@
+/* Aseguramos que el contenedor principal ocupe toda la altura disponible */
+
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+.main {
+display: flex;
+justify-content: center;
+align-items: flex-start; /* Alinea el formulario hacia arriba */
+min-height: calc(100vh - 100px); /* Hacemos que el contenido ocupe todo el espacio disponible, restando el espacio para el header y footer */
+padding: 20px;
+}
+
+.formContainer {
+background-color: #8c8c8c; /* Gris oscuro para el fondo */
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+width: 100%;
+max-width: 500px; /* Ajusta el tamaño máximo del formulario */
+}
+
+.formContainer h1 {
+color: rgb(0, 0, 0);
+text-align: center;
+margin-bottom: 20px;
+}
+
+.formControl {
+margin-bottom: 20px;
+}
+
+.formControl label {
+font-size: 16px;
+font-weight: bold;
+color: #000000;
+display: block;
+margin-bottom: 8px;
+}
+
+.formControl input,
+.formControl textarea {
+width: 100%;
+padding: 12px;
+font-size: 16px;
+border-radius: 8px;
+border: 1px solid #ddd;
+margin-bottom: 10px;
+transition: border-color 0.3s ease;
+background-color: #ffffff; /* Fondo oscuro para los campos */
+color: rgb(0, 0, 0); /* Color blanco para el texto */
+}
+
+.formControl input:focus,
+.formControl textarea:focus {
+border-color: #007BFF; /* Color de borde azul al hacer foco */
+outline: none;
+}
+
+.formControl textarea {
+resize: vertical;
+min-height: 100px;
+}
+
+.submitButton {
+background-color: #000000;
+color: white; 
+font-size: 16px;
+font-weight: bold;
+padding: 12px;
+width: 100%;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+margin-top: 20px;
+}
+
+.submitButton:hover {
+background-color: #404040;
+}
+
+.submitButton:focus {
+outline: none;
+}
+
+.submitButton:active {
+transform: scale(0.98);
+}
+
+.error {
+color: red;
+font-size: 14px;
+margin-top: 5px;
+margin-bottom: 15px;
+text-align: center;
+}
+
+/* Estilo para el campo de fecha */
+.formControl input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #9e9e9e;
+  background-color: #ffffff; 
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+}

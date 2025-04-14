@@ -7,8 +7,8 @@ import styles from "../app/page.module.css"
 
 import Link from "next/link"
 import Image from 'next/image';
-export default function Home() {
 
+export default function Home() {
   const imgRef = useRef(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const router = useRouter();
@@ -23,22 +23,27 @@ export default function Home() {
     }
   }, []);
 
-  return(
-      <Layout>
-      <header className={styles.header}>
-        <h1>Inicio</h1>
-        <a href="/">
-          <img src="/fotos/logo.webp" alt="Logo de la página" className={styles.headerLogo} />
-        </a>
-      </header>
+  return (
+    <Layout>
+      <div className={styles.backgroundContainer}>
+        <div className={styles.overlayContent}>
+          <header className={styles.header}>
+            <h1>Inicio</h1>
+            <a href="/">
+              <img src="/fotos/logo.webp" alt="Logo de la página" className={styles.headerLogo} />
+            </a>
+          </header>
           <main className={styles.main}>
-              <button type='button' onClick={() => router.push('/subastas')} className={styles.customButton}>
-                  IR A SUBASTAS
-              </button>
+            <button
+              type='button'
+              onClick={() => router.push('/subastas')}
+              className={styles.customButton}
+            >
+              IR A SUBASTAS
+            </button>
           </main>
-      </Layout>
-  )
-
-
-
+        </div>
+      </div>
+    </Layout>
+  );
 }
