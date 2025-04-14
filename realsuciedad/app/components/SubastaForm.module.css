@@ -1,10 +1,6 @@
 /* SubastaForm.module.css */
 
-/* Aseguramos que el contenedor principal ocupe toda la altura disponible */
-html, body {
-    height: 100%;
-    margin: 0;
-}
+
 
 .main {
     display: flex;
