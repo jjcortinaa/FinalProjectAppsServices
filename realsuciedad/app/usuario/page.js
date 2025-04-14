@@ -25,9 +25,13 @@ export default function Usuario() {
 
       {/* TODO */}
       {/* Botón mis subastas que envíe a la carpeta mis_subastas/[id] */}
+      <button onClick={() => router.push(`/mis_subastas/${id}`)} className={styles.button}>Mis Subastas</button>
 
       {/* TODO */}
       {/* Botón mis pujas  que envíe a la carpeta mis_pujas/[id]*/}
+
+      {/* TODO */}
+      {/* Botón info personal*/}
       </main>
 
       </Layout>

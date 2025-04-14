@@ -29,13 +29,12 @@ const SubastaForm = ({ id }) => {
       .then(data => setCategories(data.results || []))
       .catch(err => console.error('Error al obtener categorías:', err));
 
-    {/* TODO */}
-    {/* Cambiar parsedUser.username por parsedUser.id (hacer antes el TODO de inicio) */}
     const storedUser = localStorage.getItem('accessToken');
+    const idUser = localStorage.getItem('user_id')
     if (storedUser && storedUser !== 'undefined') {
       const parsedUser = JSON.parse(storedUser);
       const token = parsedUser.token;
-      setUser(parsedUser.username);
+      setUser(idUser);
     }
   }, []);
   
@@ -54,7 +53,7 @@ const SubastaForm = ({ id }) => {
           setBrand(data.brand);
           setCategory(data.category);
           setThumbnail(data.thumbnail);
-          setEndDate(data.closing_date.split('T')[0]);
+          setEndDate(data.closed_at.split('T')[0]);
           setCreationDate(data.creation_date);
         })
         .catch(err => console.error('Error al cargar subasta para editar:', err));
@@ -81,9 +80,10 @@ const SubastaForm = ({ id }) => {
       category: parseInt(category),
       thumbnail,
       creation_date: creationDate,
-      closing_date: new Date(endDate).toISOString(),
+      closed_at: new Date(endDate).toISOString(),
       isOpen: true,
-      auctioneer: user,
+      auctioneer: user
+
     };
 
     const method = id ? 'PATCH' : 'POST';

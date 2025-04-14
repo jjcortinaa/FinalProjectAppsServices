@@ -36,7 +36,7 @@ const DetalleSubasta = () => {
           <ul>
             {pujas.map((puja, index) => (
               <li key={index}>
-                <strong>{puja.id} - {puja.bidder}</strong> pujó <strong>{puja.price} euros</strong> el {new Date(puja.creation_date).toLocaleString()}
+                <strong>{puja.id} - {puja.bidder}={puja.bidder_id}</strong> pujó <strong>{puja.price} euros</strong> el {new Date(puja.creation_date).toLocaleString()}
               </li>
             ))}
           </ul>

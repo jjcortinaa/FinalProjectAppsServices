@@ -7,11 +7,13 @@ import Layout from "@/app/components/Layout";
 import styles from './detalle.module.css';
 
 const DetalleSubasta = ({ params }) => {
+
   const [yaPujado, setYaPujado] = useState(false);
   const { id } = use(params); 
   const router = useRouter();
   const [reloj, setWatches] = useState([]);
   const [user, setUser] = useState(false);
+  const [userID, setUserId] = useState(false);
   const [bidId, setBidId] = useState(0);
   const [isOwner, setOwner] = useState(false);
 
@@ -25,12 +27,13 @@ useEffect(() => {
   if (storedPrice) {
     setPrecioActual(parseInt(storedPrice));
   }
-
+  const storedId =  localStorage.getItem('user_id')
   const storedUser = localStorage.getItem('accessToken');
   if (storedUser && storedUser !== 'undefined') {
     const parsedUser = JSON.parse(storedUser);
     const token = parsedUser.token;
     setUser(parsedUser.username);
+    setUserId(storedId)
 
     // Obtener el ID de la puja del usuario para esta subasta
     fetch(`http://127.0.0.1:8000/api/auctions/${id}/bids/`)
@@ -54,7 +57,7 @@ useEffect(() => {
     if (auction) {
       setWatches(auction || []);
       setPrecioActual(auction.price || 0);
-      if (auction.auctioneer === user){
+      if (parseInt(auction.auctioneer) === parseInt(storedId)){
         setOwner(true)
       } 
     }
@@ -138,6 +141,7 @@ useEffect(() => {
           auction: id,
           price: cantidad,
           bidder: user,
+          bidder_id: userID
         }),
       })
         .then(res => {

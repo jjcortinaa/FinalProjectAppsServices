@@ -29,17 +29,15 @@ const Inicio = () => {
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) {
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
-      {/* TODO */}
-      {/* Modificar url en la que inician sesiión los usuarios */}
-      const response = await fetch('https://das-p2-backend.onrender.com/api/users/login/', {  
+      const response = await fetch('http://127.0.0.1:8000/api/token/', {  
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,12 +47,25 @@ const Inicio = () => {
           password: password,
         }),
       });
-
-      {/* TODO */}
-      {/* ¿El POST devuelve el id del username? En caso de que sí añadirlo como elemento del dict */}
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        const data = await response.json();
+        const accessToken = data.access;
+  
+        const userResponse = await fetch('http://127.0.0.1:8000/api/users/profile/', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+  
+        const userData = await userResponse.json();
+        const userId = userData.id;
+  
+        localStorage.setItem('user_id', userId);
         localStorage.setItem('accessToken', JSON.stringify({ username: user, password: password }));
+  
         router.push('/sobre_nosotros'); 
       } else {
         setError('Credenciales incorrectas. Intenta de nuevo.');
@@ -66,6 +77,7 @@ const Inicio = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <Layout>
