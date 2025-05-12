@@ -5,7 +5,8 @@ import Layout from "@/app/components/Layout";
 import styles from './misPujas.module.css';  // Asegúrate de tener este archivo CSS
 
 const MisPujas = () => {
-
+  
+  const user = localStorage.getItem('user')
   const id = localStorage.getItem('user_id')
   const [pujas, setPujas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ const MisPujas = () => {
           const bids = datos.results || datos;
 
           bids.forEach(bid => {
-            if (bid.bidder_id == id) {
+            if (bid.bidder == user) {
               pujasUsuario.push({
                 ...bid,
                 auctionName: auction.name,

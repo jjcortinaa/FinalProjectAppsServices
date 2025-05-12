@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Layout from "@/app/components/Layout";
 import styles from './detalle.module.css';
+import RatingForm from "@/app/components/RatingForm";
 
 const DetalleSubasta = ({ params }) => {
 
@@ -68,7 +69,7 @@ useEffect(() => {
   .catch(error => {
     console.error("Error fetching auction:", error);
   });
-}, [id]);
+}, [id, precioActual]);
 
 
   useEffect(() => {
@@ -94,30 +95,49 @@ useEffect(() => {
 
   const modifyPuja = () => {
     const cantidad = parseInt(puja);
-    fetch(`http://127.0.0.1:8000/api/auctions/${id}/bids/${bidId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ price: cantidad }),
-    })
-      .then(res => {
-        if (!res.ok){
-          throw new Error("Error al actualizar el precio")
-        }else{
-          setMensaje(`Puja modificada correctamente a ${cantidad}!`)
-        } ;
-        return res.json();
+    if (!cantidad || cantidad <= 0) {
+      setMensaje("Introduce una cantidad válida.");
+      setMensajeClase(styles.mensajeError);
+      return;
+    }
+    else if (cantidad <= precioActual) {
+      setMensaje("La puja debe ser mayor al precio actual.");
+      setMensajeClase(styles.mensajeError);
+    }
+    else {
+      fetch(`http://127.0.0.1:8000/api/auctions/${id}/bids/${bidId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ price: Number(cantidad) }),
       })
-      .then(data => {
-        console.log("Precio actualizado:", data);
-        
-      })
+        .then(res => {
+          if (!res.ok){
+            throw new Error("Error al actualizar el precio")
+          }else{
+            setMensaje(`Puja modificada correctamente a ${cantidad}!`)
+            setPrecioActual(cantidad);
+          } ;
+          return res.json();
+        })
+        .then(data => {
+          console.log("Precio actualizado:", data);
+          
+        })
+        .catch(err => {
+          console.error("Error al registrar la puja en el servidor:", err);
+          setMensaje("Error al registrar la puja en el servidor.");
+          setMensajeClase(styles.mensajeError);
+        })
+    }
+    
   }
 
 
   const handlePuja = () => {
     const cantidad = parseInt(puja);
+
   
     if (!cantidad || cantidad <= 0) {
       setMensaje("Introduce una cantidad válida.");
@@ -156,6 +176,7 @@ useEffect(() => {
         .then(data => {
           console.log("Puja registrada:", data);
           setBidId(data.id); // Aquí obtienes el ID de la puja
+          setPrecioActual(data.auction_price)
           setYaPujado(true);
 
         })
@@ -182,7 +203,9 @@ useEffect(() => {
             <h2>{reloj.name}</h2>
             <img src={reloj.thumbnail} alt={reloj.name} className={styles.imagenReloj} />
           </div>
-
+          {userID && (
+            <RatingForm auctionId={id} userId={userID} />
+          )}
           <div className={styles.detalleDerecha}>
             <p>Precio actual: <strong>{precioActual} euros</strong></p>
             
