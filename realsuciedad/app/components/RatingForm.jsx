@@ -4,90 +4,174 @@ import { useState, useEffect } from "react";
 
 const RatingForm = ({ auctionId, userId }) => {
   const [rating, setRating] = useState(null);
-  const [average, setAverage] = useState(null);
   const [ratingId, setRatingId] = useState(null);
+  const [average, setAverage] = useState(null);
 
-  useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/auctions/ratings/auction/${auctionId}`)
-      .then(res => {
-        if (!res.ok) throw new Error("No se pudo cargar la lista de ratings");
-        return res.json();
-      })
-      .then(data => {
-        const ratings = data.results || data; // ← aquí puede venir el error si falta algo
-  
-        if (!Array.isArray(ratings)) {
-          throw new Error("Respuesta inesperada: se esperaba una lista");
-        }
-  
-        const myRating = ratings.find(r => parseInt(r.user) === parseInt(userId));
-        setRating(myRating?.value || null);
-  
-        if (ratings.length > 0) {
-          const total = ratings.reduce((sum, r) => sum + r.value, 0);
-          const avg = total / ratings.length;
-          setAverage(avg.toFixed(2));
-        }
-      })
-      .catch(err => console.error("Error al cargar valoraciones:", err));
-  }, [auctionId, userId]);
-  
+  const token = localStorage.getItem("authorization");
 
-  const handleRatingChange = (value) => {
-    const token = localStorage.getItem('authorization'); 
-    fetch(`http://127.0.0.1:8000/api/auctions/ratings/`, {
-    method: "POST",
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-    }, 
-    body: JSON.stringify({ value: value, auction: auctionId })
-    })
-    .then(res => {
-        if (!res.ok) {
-          return res.json().then(errData => {
-            console.error("Detalles del error al enviar valoración:", errData);
-            throw new Error("Error al enviar valoración");
-          });
-        }
-        return res.json();
-      })
-      
-    .then(() => {
-    setRating(value);
-    location.reload();
-    })
-    .catch(err => console.error(err));
+  const fetchAuctionRatingAverage = async (auctionId) => {
+    const token = localStorage.getItem("authorization");
+  
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/auctions/ratings/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (!res.ok) throw new Error("No se pudo obtener ratings");
+  
+      const data = await res.json();
+      const ratings = Array.isArray(data) ? data : data.results;
+  
+      const auctionRatings = ratings.filter(r => r.auction == auctionId);
+      if (auctionRatings.length === 0) return null;
+  
+      const total = auctionRatings.reduce((sum, r) => sum + r.value, 0);
+      const average = total / auctionRatings.length;
+      return average.toFixed(2);
+    } catch (err) {
+      console.error("Error al obtener media de ratings:", err);
+      return null;
+    }
   };
 
-  const handleDelete = () => {
-    if (!ratingId) return;
+  const isPatch = async (auctionId, userId) => {
+    const token = localStorage.getItem("authorization");
+  
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/auctions/ratings/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error al cargar ratings:", errorData);
+        throw new Error("No se pudo cargar las valoraciones.");
+      }
+  
+      const data = await response.json();
+      const ratings = data.results || data;
+  
+      // Filtramos los ratings por auctionId y userId
+      console.log("ratings recibidos:", ratings);
+      console.log("comparando con auctionId:", auctionId, "userId:", userId);
 
-    fetch(`http://127.0.0.1:8000/api/auctions/ratings/${ratingId}/delete/`, {
-      method: "DELETE"
-    })
-      .then(() => {
-        setRating(null);
-        setRatingId(null);
-        location.reload();
-      })
-      .catch(err => console.error("Error al eliminar valoración", err));
+      const ratingExists = ratings.some(
+        (rating) => rating.auction == auctionId && rating.user == userId
+      );
+      return ratingExists;
+    } catch (err) {
+      console.log("Error al verificar la valoración:", err);
+      return false; // En caso de error, devolvemos false
+    }
   };
+
+  const getRatingId = async (auctionId, userId) => {
+    
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/auctions/ratings/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error al obtener las valoraciones");
+      }
+  
+      const data = await response.json();
+      const rating = data.results.find(
+        (rating) => rating.auction == auctionId && rating.user == userId
+      );
+  
+      return rating ? rating.id : null;
+    } catch (err) {
+      console.error("Error al obtener el ID de la valoración:", err);
+      return null;
+    }
+  };
+
+  const handleRatingChange = async (value, auctionId, userId) => {
+    const is_patch = await isPatch(auctionId, userId);
+    console.log(is_patch)
+    try {
+      let response;
+      if (!is_patch) {
+        // Si no existe, hacemos un POST para crear la valoración
+        response = await fetch("http://127.0.0.1:8000/api/auctions/ratings/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            value: value,
+            auction: auctionId,
+            user: userId,
+          }),
+        });
+      } else {
+        // Si existe, hacemos un PATCH para actualizar la valoración
+        const ratingId = await getRatingId(auctionId, userId); // Función para obtener el ID de la valoración existente
+        response = await fetch(`http://127.0.0.1:8000/api/auctions/ratings/${ratingId}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            value: value,
+          }),
+        });
+      }
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error(is_patch ? "Error al crear rating:" : "Error al actualizar rating:", errorData);
+        throw new Error(is_patch ? "No se pudo crear la valoración." : "No se pudo actualizar la valoración.");
+      }
+  
+      const data = await response.json();
+      console.log(!is_patch ? "Rating creado:" : "Rating actualizado:", data);
+      setRating(value)
+  
+    } catch (err) {
+      console.error("Error al manejar la valoración:", err);
+    }
+  };
+
+
+  useEffect(() => { 
+    fetchAuctionRatingAverage(auctionId).then(avg => setAverage(avg));
+   }, [rating]);
+
+
 
   return (
     <div>
       <h3>Valoración media: {average ?? "Sin votos"}</h3>
       <div>
         {[1, 2, 3, 4, 5].map(val => (
-          <button key={val} onClick={() => handleRatingChange(val)} style={{ fontWeight: val === rating ? 'bold' : 'normal' }}>
+          <button
+            key={val}
+            onClick={() => handleRatingChange(val, auctionId, userId)}
+            style={{ fontWeight: val === rating ? 'bold' : 'normal' }}
+          >
             {val} ⭐
           </button>
         ))}
-        {rating && (
+        {/* {rating && (
           <button onClick={handleDelete} style={{ marginLeft: '10px' }}>
             Quitar valoración
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
