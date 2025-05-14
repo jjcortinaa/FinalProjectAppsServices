@@ -9,8 +9,12 @@ const Subastas = () => {
   const [watches, setWatches] = useState([]);
   const [priceFilter, setPriceFilter] = useState("");   
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [stateFilter, setStateFilter] = useState("");  // Nuevo estado para el filtro de estado
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [ratingMin, setRatingMin] = useState(0);
+  const states = { "abierto": true, "cerrado": false};  // Diccionario de estados
+
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/auctions/`)
@@ -23,12 +27,18 @@ const Subastas = () => {
       .then(res => res.json())
       .then(data => setCategories(data.results))
       .catch(err => console.error("Error al cargar categorías:", err));
+
   }, []);
 
-  const filteredWatches = Array.isArray(watches) ? watches.filter(watch =>
-    (priceFilter === "" || (watch.price <= Number(priceFilter) && Number(priceFilter) > 0)) &&
-    (categoryFilter === "" || watch.category == categoryFilter)
-  ) : [];
+  const filteredWatches = Array.isArray(watches) ? watches.filter(watch => {
+    console.log("Valor de watch.is_open:", watch.isOpen);  // Para depurar
+    return (
+      (priceFilter === "" || (watch.price <= Number(priceFilter) && Number(priceFilter) > 0)) &&
+      (categoryFilter === "" || watch.category == categoryFilter) && 
+      ratingMin < Number(watch.rating) &&
+      (stateFilter === "" || watch.isOpen === states[stateFilter])
+    );
+  }) : [];
 
   return (
     <Layout>
@@ -47,12 +57,29 @@ const Subastas = () => {
             />
           </label>
           <label>
+            Filtrar por rating minimo:
+            <input
+              type="number"
+              value={ratingMin}
+              onChange={e => setRatingMin(e.target.value)}
+              placeholder="Rating minimo"
+            />
+          </label>
+          <label>
             Filtrar por categoría:
             <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)}>
               <option value="">Todas</option>
         {categories.map(cat => (
           <option key={cat.id} value={cat.id}>{cat.name}</option>
         ))}
+            </select>
+          </label>
+          <label>
+            Filtrar por estado:
+            <select value={stateFilter} onChange={e => setStateFilter(e.target.value)}>
+              <option value="">Todos</option>
+              <option value="abierto">Abierto</option>
+              <option value="cerrado">Cerrado</option>
             </select>
           </label>
           <section id="relojes">

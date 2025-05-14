@@ -25,9 +25,33 @@ const RatingForm = ({ auctionId, userId }) => {
       const ratings = Array.isArray(data) ? data : data.results;
       console.log("resultado del get",data.results)
       const auctionRatings = ratings.filter(r => r.auction == auctionId);
-      if (auctionRatings.length === 0) return null;
+
+      if (auctionRatings.length === 0){
+        await fetch(`http://127.0.0.1:8000/api/auctions/${auctionId}/`, {
+          method: "PATCH",
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ rating:1.00 }),
+        });
+        return null;
+      } 
       const total = auctionRatings.reduce((sum, r) => sum + parseFloat(r.value), 0);
       const average = total / auctionRatings.length;
+
+
+
+      await fetch(`http://127.0.0.1:8000/api/auctions/${auctionId}/`, {
+        method: "PATCH",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ rating:average.toFixed(2) }),
+      });
+
+
       return average.toFixed(2);
     } catch (err) {
       console.error("Error al obtener media de ratings:", err);
