@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import Layout from "@/app/components/Layout";
 import styles from './detalle.module.css';
 import RatingForm from "@/app/components/RatingForm";
+import CommentForm from "@/app/components/CommentForm";
+
 
 const DetalleSubasta = ({ params }) => {
 
@@ -205,7 +207,7 @@ useEffect(() => {
             <img src={reloj.thumbnail} alt={reloj.name} className={styles.imagenReloj} />
           </div>
           {userID && (
-            <RatingForm auctionId={id} userId={userID} />
+             <RatingForm auctionId={id} userId={userID} />
           )}
           <div className={styles.detalleDerecha}>
             <p>Precio actual: <strong>{precioActual} euros</strong></p>
@@ -244,6 +246,7 @@ useEffect(() => {
 
               </>
             )}
+            <CommentForm auctionId={id} userId={userID || null} />
 
           </div>
         </div>
@@ -260,6 +263,7 @@ useEffect(() => {
         )}
 
       </div>
+      
     </Layout>
   );
 };

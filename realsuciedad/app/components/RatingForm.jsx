@@ -23,11 +23,10 @@ const RatingForm = ({ auctionId, userId }) => {
   
       const data = await res.json();
       const ratings = Array.isArray(data) ? data : data.results;
-  
+      console.log("resultado del get",data.results)
       const auctionRatings = ratings.filter(r => r.auction == auctionId);
       if (auctionRatings.length === 0) return null;
-  
-      const total = auctionRatings.reduce((sum, r) => sum + r.value, 0);
+      const total = auctionRatings.reduce((sum, r) => sum + parseFloat(r.value), 0);
       const average = total / auctionRatings.length;
       return average.toFixed(2);
     } catch (err) {
@@ -140,19 +139,60 @@ const RatingForm = ({ auctionId, userId }) => {
   
       const data = await response.json();
       console.log(!is_patch ? "Rating creado:" : "Rating actualizado:", data);
-      setRating(value)
+      setRatingId(value)
+      
   
     } catch (err) {
       console.error("Error al manejar la valoración:", err);
     }
   };
 
+  const handleDelete = async () => {
+    const id = await getRatingId(auctionId, userId);
+  
+    if (id) {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/auctions/ratings/${id}/`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error al eliminar la valoración:", errorData);
+          throw new Error("No se pudo eliminar la valoración.");
+        }
+  
+        console.log("Valoración eliminada con éxito");
+        setRating(null); // quita el bold de los botones
+        setRatingId(prev => prev === null ? "deleted" : null); // fuerza rerender
+        const avg = await fetchAuctionRatingAverage(auctionId);
+        setAverage(avg);
+  
+      } catch (err) {
+        console.error("Error al intentar eliminar la valoración:", err);
+      }
+    } else {
+      console.log("No se encontró la valoración.");
+    }
+  };
+  
 
-  useEffect(() => { 
-    fetchAuctionRatingAverage(auctionId).then(avg => setAverage(avg));
-   }, [rating]);
-
-
+  useEffect(() => {
+    const updateData = async () => {
+      const exists = await isPatch(auctionId, userId);
+      setRating(exists);
+  
+      const avg = await fetchAuctionRatingAverage(auctionId);
+      setAverage(avg);
+    };
+  
+    updateData();
+  }, [ratingId, userId, auctionId]); 
+  
 
   return (
     <div>
@@ -167,11 +207,11 @@ const RatingForm = ({ auctionId, userId }) => {
             {val} ⭐
           </button>
         ))}
-        {/* {rating && (
+        {rating && (
           <button onClick={handleDelete} style={{ marginLeft: '10px' }}>
             Quitar valoración
           </button>
-        )} */}
+        )}
       </div>
     </div>
   );

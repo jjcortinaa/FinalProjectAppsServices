@@ -1,0 +1,109 @@
+.commentContainer {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .commentContainer h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #222;
+  }
+  
+  .commentContainer .formField {
+    margin-bottom: 1rem;
+  }
+  
+  .commentContainer input[type="text"],
+  .commentContainer textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+  }
+  
+  .commentContainer textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .commentContainer .submitButton {
+    background-color: #222;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .commentContainer .submitButton:hover {
+    background-color: #444;
+  }
+  
+  .commentContainer .message {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .commentContainer .commentList {
+    margin-top: 2rem;
+  }
+  
+  .commentContainer .commentItem {
+    border-top: 1px solid #ddd;
+    padding: 1rem 0;
+    position: relative;
+  }
+  
+  .commentContainer .commentItem strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #111;
+  }
+  
+  .commentContainer .commentItem p {
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .commentContainer .commentActions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .commentContainer .commentActions button {
+    background-color: transparent;
+    border: 1px solid #999;
+    color: #111;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .commentContainer .commentActions button:hover {
+    background-color: #eee;
+    border-color: #555;
+  }
+  
+  /* Edición */
+  .commentContainer .commentItem input[type="text"],
+  .commentContainer .commentItem textarea {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
