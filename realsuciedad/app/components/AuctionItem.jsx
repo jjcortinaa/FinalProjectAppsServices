@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import styles from './AuctionItem.module.css';
 
-const AuctionItem = ({ title, thumbnail, description, id }) => {
+const AuctionItem = ({ title, thumbnail, description, id, lastCall }) => {
+
   return (
     <article className={styles.reloj}>
       <figure>
@@ -13,6 +14,7 @@ const AuctionItem = ({ title, thumbnail, description, id }) => {
         </Link>
       </figure>
       <p>{description}</p>
+      <p>Aqui lastCall es {lastCall}</p>
     </article>
   );
 };

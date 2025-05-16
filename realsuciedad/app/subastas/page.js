@@ -14,6 +14,9 @@ const Subastas = () => {
   const [error, setError] = useState(null);
   const [ratingMin, setRatingMin] = useState(0);
   const states = { "abierto": true, "cerrado": false};  // Diccionario de estados
+  const lastCall = {"true": true, "false":false};
+  const [stateCall, setStateCall] = useState("");
+
 
 
   useEffect(() => {
@@ -36,7 +39,7 @@ const Subastas = () => {
       (priceFilter === "" || (watch.price <= Number(priceFilter) && Number(priceFilter) > 0)) &&
       (categoryFilter === "" || watch.category == categoryFilter) && 
       ratingMin < Number(watch.rating) &&
-      (stateFilter === "" || watch.isOpen === states[stateFilter])
+      (stateFilter === "" || watch.isOpen === states[stateFilter]) && (watch.lastCall === lastCall[stateCall])
     );
   }) : [];
 
@@ -82,9 +85,21 @@ const Subastas = () => {
               <option value="cerrado">Cerrado</option>
             </select>
           </label>
-          <section id="relojes">
+          <label>
+            Filtrar por last call:
+            <select value={stateCall} onChange={e => setStateCall(e.target.value)}>
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </label>
+          <section id="relojes" >
             {filteredWatches.map((watch, index) => (
-              <AuctionItem key={index} {...watch} />
+              watch.lastCall ?
+              (
+              <AuctionItem key={index} {...watch } />
+              )
+              : (<AuctionItem key={index} {...watch }  />)
+
             ))}
           </section>
         </>
